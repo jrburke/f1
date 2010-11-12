@@ -1,0 +1,14 @@
+{
+  "name": "Mozilla F1",
+  "version": "0.7.1",
+  "description": "Share links fast.",
+  "icons": { "128": "extension-icon.png" },
+  "browser_action": {
+    "default_icon": "toolbar-button.png",
+    "popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "https://f1.mozillamessaging.com/*"
+  ]
+}

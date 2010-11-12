@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>F1</title>
+    <style>
+        html,
+        body {
+            overflow: hidden;
+            width: 1024px;
+            height: 114px;
+        }
+        iframe {
+            border: 1px solid black;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body></body>
+<script>
+    var shareUrl = 'https://f1.mozillamessaging.com/share/',
+        system = 'dev';
+
+    function getPageTitle(tab) {
+        return tab.title;
+    }
+
+    function getPageDescription(tab) {
+        return '';
+    }
+    
+    function getPageMedium(tab) {
+        return '';
+    }
+
+    function getPageUrl(tab) {
+        return tab.url;
+    }
+
+    function getCanonicalURL(tab) {
+        return '';
+    }
+
+    function getShortURL(tab) {
+        return '';
+    }
+
+    function previews(tab) {
+        return [];
+    }
+
+    function getThumbnailData(tab) {
+        return '';
+    }
+
+    chrome.tabs.getSelected(null, function (tab) {
+        var url,
+            options = {
+              title: getPageTitle(tab),
+              description: getPageDescription(tab),
+              medium: getPageMedium(tab),
+              url: getPageUrl(tab),
+              canonicalUrl: getCanonicalURL(tab),
+              shortUrl: getShortURL(tab),
+              previews: previews(tab),
+              system: system
+            };
+
+        if (!options.previews.length && !options.thumbnail) {
+          // then we need to make our own thumbnail
+          options.thumbnail = getThumbnailData();
+        }
+        url = shareUrl +
+                  '#options=' + encodeURIComponent(JSON.stringify(options));
+
+        var iframe = document.createElement('iframe');
+        iframe.src = url;
+        document.getElementsByTagName('body')[0].appendChild(iframe);
+    });
+</script>
+</html>
